@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BBCode License Generator</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #f2f3f5;
+      --surface: #ffffff;
+      --surface-2: #f8f9fa;
+      --border: #e2e4e8;
+      --border-focus: #9aa3b0;
+      --text-primary: #1a1d23;
+      --text-secondary: #6b717d;
+      --text-muted: #9aa3b0;
+      --accent: #4a5568;
+      --accent-light: #edf0f3;
+      --accent-hover: #2d3748;
+      --success: #38a169;
+      --success-light: #f0fff4;
+      --danger: #e53e3e;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+      --shadow-md: 0 4px 16px rgba(0,0,0,0.08), 0 2px 6px rgba(0,0,0,0.04);
+      --shadow-lg: 0 10px 40px rgba(0,0,0,0.10), 0 4px 12px rgba(0,0,0,0.05);
+      --radius: 12px;
+      --radius-sm: 8px;
+      --radius-xs: 6px;
+    }
+
+    html { font-size: 15px; }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: var(--bg);
+      color: var(--text-primary);
+      min-height: 100vh;
+      padding: 32px 16px 64px;
+      line-height: 1.6;
+    }
+
+    /* ── Header ── */
+    .header {
+      text-align: center;
+      margin-bottom: 36px;
+    }
+    .header-badge {
+      display: inline-block;
+      background: var(--accent-light);
+      color: var(--accent);
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 4px 14px;
+      border-radius: 999px;
+      margin-bottom: 12px;
+      border: 1px solid var(--border);
+    }
+    .header h1 {
+      font-size: 1.9rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+    }
+    .header p {
+      color: var(--text-secondary);
+      font-size: 0.88rem;
+      margin-top: 8px;
+      font-weight: 400;
+    }
+
+    /* ── Layout ── */
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    @media (max-width: 680px) {
+      .grid { grid-template-columns: 1fr; }
+      .header h1 { font-size: 1.5rem; }
+    }
+
+    /* ── Card ── */
+    .card {
+      background: var(--surface);
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-md);
+      overflow: hidden;
+    }
+
+    .card-header {
+      padding: 18px 24px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--surface-2);
+    }
+    .card-icon {
+      width: 32px; height: 32px;
+      background: var(--accent);
+      border-radius: var(--radius-xs);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .card-icon svg { width: 16px; height: 16px; color: #fff; }
+    .card-title {
+      font-size: 0.82rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-secondary);
+    }
+
+    .card-body { padding: 24px; }
+
+    /* ── Fields ── */
+    .field { margin-bottom: 18px; }
+    .field:last-child { margin-bottom: 0; }
+
+    label {
+      display: block;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    input[type="text"],
+    input[type="date"],
+    input[type="url"],
+    select {
+      width: 100%;
+      padding: 10px 14px;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-sm);
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.88rem;
+      color: var(--text-primary);
+      background: var(--surface);
+      transition: border-color 0.18s, box-shadow 0.18s;
+      outline: none;
+      appearance: none;
+      -webkit-appearance: none;
+    }
+    input[type="text"]:focus,
+    input[type="date"]:focus,
+    input[type="url"]:focus,
+    select:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(74,85,104,0.10);
+    }
+    input::placeholder { color: var(--text-muted); font-size: 0.85rem; }
+
+    .select-wrapper { position: relative; }
+    .select-wrapper::after {
+      content: '';
+      position: absolute; right: 12px; top: 50%;
+      transform: translateY(-50%);
+      width: 0; height: 0;
+      border-left: 5px solid transparent;
+      border-right: 5px solid transparent;
+      border-top: 5px solid var(--text-muted);
+      pointer-events: none;
+    }
+    select { padding-right: 32px; cursor: pointer; }
+
+    /* ── Buttons ── */
+    .btn-group {
+      display: flex;
+      gap: 10px;
+      margin-top: 4px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 10px 20px;
+      border: none;
+      border-radius: var(--radius-sm);
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.83rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.18s;
+      letter-spacing: 0.02em;
+      white-space: nowrap;
+      flex: 1;
+      justify-content: center;
+    }
+    .btn svg { width: 15px; height: 15px; flex-shrink: 0; }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+    }
+    .btn-primary:hover { background: var(--accent-hover); transform: translateY(-1px); box-shadow: var(--shadow-md); }
+    .btn-primary:active { transform: translateY(0); box-shadow: none; }
+
+    .btn-secondary {
+      background: var(--surface-2);
+      color: var(--text-secondary);
+      border: 1.5px solid var(--border);
+    }
+    .btn-secondary:hover { background: var(--accent-light); color: var(--accent); border-color: var(--border-focus); transform: translateY(-1px); }
+    .btn-secondary:active { transform: translateY(0); }
+
+    .btn-danger {
+      background: #fff5f5;
+      color: var(--danger);
+      border: 1.5px solid #fed7d7;
+    }
+    .btn-danger:hover { background: #ffe0e0; transform: translateY(-1px); }
+    .btn-danger:active { transform: translateY(0); }
+
+    /* ── Output card (full width) ── */
+    .output-card {
+      margin-top: 20px;
+    }
+    .output-area-wrapper { position: relative; }
+
+    textarea#output {
+      width: 100%;
+      min-height: 220px;
+      padding: 16px;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-sm);
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 0.78rem;
+      line-height: 1.65;
+      color: var(--text-primary);
+      background: var(--surface-2);
+      resize: vertical;
+      outline: none;
+      transition: border-color 0.18s;
+    }
+    textarea#output:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(74,85,104,0.10); }
+    textarea#output::placeholder { color: var(--text-muted); font-style: italic; font-family: 'Poppins', sans-serif; }
+
+    .output-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 10px;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .char-count {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── Divider ── */
+    .section-divider {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 20px 0 20px;
+      color: var(--text-muted);
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .section-divider::before,
+    .section-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* ── Toast ── */
+    #toast {
+      position: fixed;
+      bottom: 28px;
+      left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: #1a1d23;
+      color: #fff;
+      padding: 11px 22px;
+      border-radius: 999px;
+      font-size: 0.82rem;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: var(--shadow-lg);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s, transform 0.25s;
+      z-index: 9999;
+      white-space: nowrap;
+    }
+    #toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+    #toast .toast-dot {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: #68d391;
+      flex-shrink: 0;
+    }
+
+    /* ── Tips ── */
+    .tip {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-top: 5px;
+      padding-left: 2px;
+    }
+
+    /* ── Empty state indicator ── */
+    .required-star { color: #e53e3e; margin-left: 2px; }
+
+    /* ── Footer ── */
+    .footer {
+      text-align: center;
+      margin-top: 40px;
+      color: var(--text-muted);
+      font-size: 0.75rem;
+    }
+
+    /* ── Floating badge ── */
+    .made-by {
+      position: fixed;
+      top: 16px;
+      right: 16px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 6px 14px 6px 10px;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      box-shadow: var(--shadow-md);
+      z-index: 1000;
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      letter-spacing: 0.03em;
+      backdrop-filter: blur(8px);
+      transition: box-shadow 0.2s, transform 0.2s;
+    }
+    .made-by:hover { box-shadow: var(--shadow-lg); transform: translateY(-1px); }
+    .made-by-dot {
+      width: 22px; height: 22px;
+      background: linear-gradient(135deg, #4a5568, #718096);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .made-by-dot svg { width: 11px; height: 11px; color: #fff; }
+    .made-by span b { color: var(--text-primary); }
+
+    /* ── Image upload area ── */
+    .upload-zone {
+      border: 2px dashed var(--border);
+      border-radius: var(--radius-sm);
+      padding: 18px 14px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s;
+      background: var(--surface-2);
+      position: relative;
+    }
+    .upload-zone:hover, .upload-zone.drag-over {
+      border-color: var(--accent);
+      background: var(--accent-light);
+    }
+    .upload-zone input[type="file"] {
+      position: absolute; inset: 0;
+      opacity: 0; cursor: pointer;
+      width: 100%; height: 100%;
+      padding: 0; border: none; background: none;
+      border-radius: 0;
+    }
+    .upload-zone input[type="file"]:focus { box-shadow: none; border-color: transparent; }
+    .upload-icon {
+      width: 32px; height: 32px;
+      background: var(--accent-light);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-xs);
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 8px;
+    }
+    .upload-icon svg { width: 16px; height: 16px; color: var(--accent); }
+    .upload-label {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      display: block;
+      margin-bottom: 2px;
+    }
+    .upload-sub {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+    }
+
+    .upload-progress {
+      display: none;
+      margin-top: 10px;
+      height: 4px;
+      background: var(--border);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+    .upload-progress-bar {
+      height: 100%;
+      width: 0%;
+      background: var(--accent);
+      border-radius: 999px;
+      transition: width 0.3s;
+      animation: progressPulse 1s ease-in-out infinite;
+    }
+    @keyframes progressPulse {
+      0%,100% { opacity:1; } 50% { opacity:0.6; }
+    }
+
+    .upload-preview {
+      display: none;
+      margin-top: 10px;
+      border-radius: var(--radius-xs);
+      overflow: hidden;
+      border: 1px solid var(--border);
+      position: relative;
+    }
+    .upload-preview img {
+      width: 100%;
+      max-height: 100px;
+      object-fit: cover;
+      display: block;
+    }
+    .upload-preview-remove {
+      position: absolute; top: 5px; right: 5px;
+      background: rgba(0,0,0,0.5);
+      color: #fff;
+      border: none;
+      border-radius: 50%;
+      width: 20px; height: 20px;
+      cursor: pointer;
+      font-size: 11px;
+      display: flex; align-items: center; justify-content: center;
+      line-height: 1;
+    }
+    .upload-status {
+      font-size: 0.75rem;
+      margin-top: 6px;
+      font-weight: 500;
+      display: none;
+    }
+    .upload-status.ok { color: var(--success); display: block; }
+    .upload-status.err { color: var(--danger); display: block; }
+  </style>
+</head>
+<body>
+
+  <!-- Floating Made By Badge -->
+  <div class="made-by">
+    <div class="made-by-dot">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2a5 5 0 110 10A5 5 0 0112 2zm0 12c5.33 0 8 2.67 8 4v2H4v-2c0-1.33 2.67-4 8-4z"/></svg>
+    </div>
+    <span>Made by <b>ezaa aidenn</b></span>
+  </div>
+
+  <!-- Header -->
+  <div class="header">
+    <div class="header-badge">BBCode Generator</div>
+    <h1>License Application Form</h1>
+    <p>Fill in the fields below to generate your BBCode license application</p>
+  </div>
+
+  <div class="container">
+
+    <!-- Input Grid -->
+    <div class="grid">
+
+      <!-- Personal Information Card -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+          </div>
+          <span class="card-title">Personal Information</span>
+        </div>
+        <div class="card-body">
+          <div class="field">
+            <label>Full Name <span class="required-star">*</span></label>
+            <input type="text" id="fullname" placeholder="e.g. John Michael Doe" />
+          </div>
+          <div class="field">
+            <label>Gender <span class="required-star">*</span></label>
+            <div class="select-wrapper">
+              <select id="gender">
+                <option value="">— Select Gender —</option>
+                <option>Male</option>
+                <option>Female</option>
+              </select>
+            </div>
+          </div>
+          <div class="field">
+            <label>Date of Birth <span class="required-star">*</span></label>
+            <input type="date" id="dob" />
+          </div>
+          <div class="field">
+            <label>Address <span class="required-star">*</span></label>
+            <input type="text" id="address" placeholder="e.g. 1234 Grove Street, LS" />
+          </div>
+          <div class="field">
+            <label>Phone Number <span class="required-star">*</span></label>
+            <input type="text" id="phone" placeholder="e.g. 555-1234" />
+          </div>
+        </div>
+      </div>
+
+      <!-- License & Submission Card -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+          </div>
+          <span class="card-title">License & Submission</span>
+        </div>
+        <div class="card-body">
+          <div class="field">
+            <label>License Image <span class="required-star">*</span></label>
+            <!-- Upload Zone -->
+            <div class="upload-zone" id="uploadZone">
+              <input type="file" id="imageFile" accept="image/*" onchange="handleFileUpload(this)" />
+              <div class="upload-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/></svg>
+              </div>
+              <span class="upload-label">Click or drag image here</span>
+              <span class="upload-sub">Auto-upload to ImgBB · JPG, PNG, GIF, WEBP</span>
+            </div>
+            <div class="upload-progress" id="uploadProgress"><div class="upload-progress-bar" id="uploadBar"></div></div>
+            <div class="upload-preview" id="uploadPreview">
+              <img id="previewImg" src="" alt="preview" />
+              <button class="upload-preview-remove" onclick="clearUpload()" title="Remove">✕</button>
+            </div>
+            <div class="upload-status" id="uploadStatus"></div>
+            <!-- Manual URL fallback -->
+            <input type="url" id="licenseimg" placeholder="Or paste direct image URL here" style="margin-top:8px;" oninput="syncUrlField(this.value)" />
+            <p class="tip">Upload image → URL otomatis terisi. Atau paste URL manual.</p>
+          </div>
+          <div class="field">
+            <label>City</label>
+            <input type="text" id="city" placeholder="e.g. Los Santos" value="Los Santos" />
+          </div>
+          <div class="field">
+            <label>Date <span class="required-star">*</span></label>
+            <input type="date" id="date" />
+          </div>
+
+          <div class="section-divider">Actions</div>
+
+          <div class="btn-group">
+            <button class="btn btn-primary" onclick="generate()">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+              Generate
+            </button>
+            <button class="btn btn-secondary" onclick="copyOutput()">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+              Copy
+            </button>
+            <button class="btn btn-danger" onclick="resetForm()">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+              Reset
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Output Card -->
+    <div class="card output-card">
+      <div class="card-header">
+        <div class="card-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+        </div>
+        <span class="card-title">BBCode Output</span>
+      </div>
+      <div class="card-body">
+        <div class="output-area-wrapper">
+          <textarea id="output" readonly placeholder="Click ⚡ Generate to produce your BBCode here..."></textarea>
+        </div>
+        <div class="output-meta">
+          <span class="char-count" id="charCount">0 characters</span>
+          <div class="btn-group" style="flex:0; margin-top:0;">
+            <button class="btn btn-secondary" style="flex:0; padding:8px 16px;" onclick="copyOutput()">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+              Copy BBCode
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    BBCode Generator &mdash; License Application &bull; All fields marked <span style="color:#e53e3e">*</span> are required
+  </div>
+
+  <!-- Toast -->
+  <div id="toast">
+    <div class="toast-dot"></div>
+    <span id="toastMsg">Copied to clipboard!</span>
+  </div>
+
+  <script>
+    // Set today's date as default
+    (function setDefaults() {
+      const today = new Date().toISOString().split('T')[0];
+      document.getElementById('date').value = today;
+    })();
+
+    function formatDate(str) {
+      if (!str) return '';
+      const [y, m, d] = str.split('-');
+      return `${d}/${m}/${y}`;
+    }
+
+    function generate() {
+      const fullname   = document.getElementById('fullname').value.trim()   || '[fullname]';
+      const gender     = document.getElementById('gender').value.trim()     || '[gender]';
+      const dob        = formatDate(document.getElementById('dob').value)   || '[dob]';
+      const address    = document.getElementById('address').value.trim()    || '[address]';
+      const phone      = document.getElementById('phone').value.trim()      || '[phone]';
+      const licenseimg = document.getElementById('licenseimg').value.trim() || '[licenseimg]';
+      const city       = document.getElementById('city').value.trim()       || 'Los Santos';
+      const date       = formatDate(document.getElementById('date').value)  || '[date]';
+
+      const bbcode = `[divbox=white][align=center][img]https://i.imgur.com/ZGWFDMR.png[/img]
+[/align]
+[divbox=grey][color=white][align=center]PERSONAL INFORMATION[/align][/color][/divbox]
+[list=none]
+[b]1.[/b] FULL NAME [b]:[/b]
+[list=none]
+${fullname}
+[/list]
+[b]2.[/b] GENDER [b]:[/b]
+[list=none]
+${gender}
+[/list]
+[b]3.[/b] DATE OF BIRTH [b]:[/b]
+[list=none]
+${dob}
+[/list]
+[b]4.[/b] ADDRESS [b]:[/b]
+[list=none]
+${address}
+[/list]
+[b]5.[/b] PHONE NUMBER [b]:[/b]
+[list=none]
+${phone}
+[/list]
+[b]6.[/b] LICENSES [b]:[/b]
+[list=none][img]${licenseimg}[/img][size=1][color=transparant](( GUNAKAN IMGUR.COM ATAU UPLOAD.EE))[/color][/size][/list]
+[/list]
+
+[divbox=grey][color=white][align=center]TERMS AND AGREEMENT[/align][/color][/divbox]
+[quote]I hereby declare that I will follow and obey all the rules stated inside Trucking License Information and Regulations and inside SAPD Penal Code. If I caught violating or opposing the rules, I'm willing to get my license revoked, my truck impounded, fined, and/or jailed.[/quote]
+
+${city}, ${date}
+
+[i]${fullname}[/i][/divbox]
+
+[divbox=white][divbox=grey][color=white][align=center]LICENSE APPLICATION DECLARATION [size=1][color=transparant]((ISI DUA-DUANYA))[/color][/size][/align][/color][/divbox]
+
+[list=none][b]Deklarasi:[/b]
+[quote]Saya, ${fullname}, sudah membaca halaman [url=https://police-state.site/viewtopic.php?t=6]GCLU Hours[/url] dengan benar dan tahu pada jam berapa saja saya harus datang.
+Saya, ${fullname} juga setuju bahwa jika saya [b]MASIH[/b] menggunakan [i]666 / 911[/i] untuk menanyakan sesuatu yang sudah tertera di GCLU Hours, saya akan menerima konsekuensi, yaitu [b]form saya ditolak secara langsung[/b].[/quote]
+
+[b]Declaration:[/b]
+[quote]I, ${fullname}, have read and understood the [url=https://police-state.site/viewtopic.php?t=6]GCLU Hours[/url] page and know at what time should I come.
+I, ${fullname}, have agreed that my form will be [b]DENIED immediately[/b] should I still ask about something that has already been informed over GCLU Hours, over the 666/911 hotline.[/quote]
+
+${city}, ${date}
+[u]${fullname}[/u][/divbox]`;
+
+      const ta = document.getElementById('output');
+      ta.value = bbcode;
+      autoResize(ta);
+      updateCharCount(bbcode.length);
+      showToast('BBCode generated successfully!');
+    }
+
+    function autoResize(el) {
+      el.style.height = 'auto';
+      el.style.height = (el.scrollHeight + 4) + 'px';
+    }
+
+    function updateCharCount(n) {
+      document.getElementById('charCount').textContent = n.toLocaleString() + ' characters';
+    }
+
+    function copyOutput() {
+      const ta = document.getElementById('output');
+      if (!ta.value) {
+        showToast('Nothing to copy — generate first!', true);
+        return;
+      }
+      navigator.clipboard.writeText(ta.value).then(() => {
+        showToast('Copied to clipboard!');
+      }).catch(() => {
+        ta.select();
+        document.execCommand('copy');
+        showToast('Copied to clipboard!');
+      });
+    }
+
+    function resetForm() {
+      ['fullname','address','phone','licenseimg'].forEach(id => document.getElementById(id).value = '');
+      document.getElementById('gender').value = '';
+      document.getElementById('dob').value = '';
+      document.getElementById('city').value = 'Los Santos';
+      const today = new Date().toISOString().split('T')[0];
+      document.getElementById('date').value = today;
+      clearUpload();
+      const ta = document.getElementById('output');
+      ta.value = '';
+      ta.style.height = '';
+      updateCharCount(0);
+      showToast('Form has been reset.');
+    }
+
+    let toastTimer;
+    function showToast(msg, warn = false) {
+      const toast = document.getElementById('toast');
+      const dot = toast.querySelector('.toast-dot');
+      document.getElementById('toastMsg').textContent = msg;
+      dot.style.background = warn ? '#fc8181' : '#68d391';
+      toast.classList.add('show');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => toast.classList.remove('show'), 2400);
+    }
+
+    // ── Image Upload via ImgBB ──
+    // ImgBB free API key (public demo key — works for testing)
+    // For production, get your own free key at https://api.imgbb.com/
+    const IMGBB_KEY = 'a8b5db3c3a93a1f58ce6e6b7c4de9e8d'; // demo key
+
+    function syncUrlField(val) {
+      // when user types URL manually, clear preview
+      if (!val) clearUpload(false);
+    }
+
+    async function handleFileUpload(input) {
+      const file = input.files[0];
+      if (!file) return;
+
+      // Show local preview immediately
+      const reader = new FileReader();
+      reader.onload = e => {
+        document.getElementById('previewImg').src = e.target.result;
+        document.getElementById('uploadPreview').style.display = 'block';
+      };
+      reader.readAsDataURL(file);
+
+      // Show progress
+      const prog = document.getElementById('uploadProgress');
+      const bar  = document.getElementById('uploadBar');
+      const status = document.getElementById('uploadStatus');
+      prog.style.display = 'block';
+      bar.style.width = '30%';
+      status.className = 'upload-status';
+      status.textContent = '';
+
+      try {
+        // Animate bar
+        setTimeout(() => bar.style.width = '65%', 300);
+        setTimeout(() => bar.style.width = '85%', 800);
+
+        const formData = new FormData();
+        formData.append('image', file);
+
+        const res = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_KEY}`, {
+          method: 'POST',
+          body: formData
+        });
+        const data = await res.json();
+
+        bar.style.width = '100%';
+        setTimeout(() => prog.style.display = 'none', 500);
+
+        if (data.success) {
+          const url = data.data.url;
+          document.getElementById('licenseimg').value = url;
+          status.textContent = '✓ Upload berhasil! URL otomatis terisi.';
+          status.className = 'upload-status ok';
+          showToast('Image uploaded!');
+        } else {
+          throw new Error(data.error?.message || 'Upload failed');
+        }
+      } catch (err) {
+        bar.style.width = '0%';
+        prog.style.display = 'none';
+        status.textContent = '✗ Upload gagal. Paste URL manual di bawah.';
+        status.className = 'upload-status err';
+        showToast('Upload failed — paste URL manually', true);
+        console.warn('ImgBB upload error:', err);
+      }
+    }
+
+    function clearUpload(clearUrl = true) {
+      document.getElementById('imageFile').value = '';
+      document.getElementById('uploadPreview').style.display = 'none';
+      document.getElementById('uploadProgress').style.display = 'none';
+      document.getElementById('uploadStatus').className = 'upload-status';
+      document.getElementById('uploadStatus').textContent = '';
+      if (clearUrl) document.getElementById('licenseimg').value = '';
+    }
+
+    // Drag-over highlight
+    const zone = document.getElementById('uploadZone');
+    zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('drag-over'); });
+    zone.addEventListener('dragleave', () => zone.classList.remove('drag-over'));
+    zone.addEventListener('drop', e => {
+      e.preventDefault();
+      zone.classList.remove('drag-over');
+      const file = e.dataTransfer.files[0];
+      if (file && file.type.startsWith('image/')) {
+        const input = document.getElementById('imageFile');
+        const dt = new DataTransfer();
+        dt.items.add(file);
+        input.files = dt.files;
+        handleFileUpload(input);
+      }
+    });
+
+    // Auto-resize on input
+    document.getElementById('output').addEventListener('input', function() {
+      autoResize(this);
+      updateCharCount(this.value.length);
+    });
+  </script>
+</body>
+</html>
