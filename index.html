@@ -757,7 +757,7 @@ ${city}, ${date}
     // ── Image Upload via ImgBB ──
     // ImgBB free API key (public demo key — works for testing)
     // For production, get your own free key at https://api.imgbb.com/
-    const IMGBB_KEY = 'a8b5db3c3a93a1f58ce6e6b7c4de9e8d'; // demo key
+    const IMGBB_KEY = 'fa8ee0bb84d5d0bd4c779d57070671f1'; // demo key
 
     function syncUrlField(val) {
       // when user types URL manually, clear preview
@@ -790,11 +790,20 @@ ${city}, ${date}
         setTimeout(() => bar.style.width = '65%', 300);
         setTimeout(() => bar.style.width = '85%', 800);
 
-        const formData = new FormData();
-        formData.append('image', file);
+        // Convert to base64 (required by ImgBB)
+        const base64 = await new Promise((resolve, reject) => {
+          const r = new FileReader();
+          r.onload = () => resolve(r.result.split(",")[1]);
+          r.onerror = reject;
+          r.readAsDataURL(file);
+        });
 
-        const res = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_KEY}`, {
-          method: 'POST',
+        const formData = new FormData();
+        formData.append("image", base64);
+        formData.append("key", IMGBB_KEY);
+
+        const res = await fetch("https://api.imgbb.com/1/upload", {
+          method: "POST",
           body: formData
         });
         const data = await res.json();
